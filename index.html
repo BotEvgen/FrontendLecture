@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Frontend Lecture</title>
+  <meta name="title" content="Frontend Lecture">
+  <meta name="description" content="Материалы после лекции по frontend: курсы, практика, roadmap и разбор интерфейсов.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Frontend Lecture">
+  <meta property="og:description" content="Материалы после лекции по frontend: курсы, практика, roadmap и разбор интерфейсов.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Frontend Lecture">
+  <meta name="twitter:description" content="Материалы после лекции по frontend: курсы, практика, roadmap и разбор интерфейсов.">
+  <link rel="icon" href="tech/favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --navy-950: #071735;
+      --navy-900: #0b2147;
+      --navy-800: #14356f;
+      --cyan-500: #17b0c9;
+      --cyan-100: #e4f8fb;
+      --blue-600: #2560c8;
+      --warm: #d9a84b;
+      --warm-100: #fff4dc;
+      --ink-900: #071225;
+      --ink-700: #27334d;
+      --ink-500: #657187;
+      --line: #d5dee8;
+      --surface: #f3f7fb;
+      --white: #ffffff;
+      --shadow: 0 24px 70px rgba(7, 18, 37, 0.13);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink-900);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(23, 176, 201, 0.16), transparent 32rem),
+        radial-gradient(circle at 12% 18%, rgba(37, 96, 200, 0.12), transparent 28rem),
+        linear-gradient(180deg, #f7fbfe 0%, #edf3f8 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand img {
+      width: 92px;
+      height: auto;
+      display: block;
+    }
+
+    .brand span {
+      color: var(--ink-500);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink-700);
+      padding: 10px 15px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .nav a:hover {
+      transform: translateY(-1px);
+      border-color: rgba(23, 176, 201, 0.55);
+      color: var(--cyan-500);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 34px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    .hero-copy {
+      border-radius: 30px;
+      background: var(--navy-900);
+      color: var(--white);
+      padding: 42px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -150px;
+      width: 330px;
+      height: 330px;
+      border: 34px solid rgba(62, 198, 220, 0.16);
+      border-radius: 50%;
+    }
+
+    .kicker {
+      color: var(--cyan-500);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 18px 0 16px;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    h1 em {
+      color: var(--cyan-500);
+      font-style: normal;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(18px, 2.2vw, 23px);
+      line-height: 1.42;
+    }
+
+    .quick-route {
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      padding: 28px;
+      box-shadow: 0 18px 46px rgba(7, 18, 37, 0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 26px;
+    }
+
+    .quick-route h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    .route-list {
+      display: grid;
+      gap: 13px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .route-list li {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 12px;
+      align-items: center;
+      color: var(--ink-700);
+      font-size: 16px;
+      line-height: 1.28;
+      font-weight: 700;
+    }
+
+    .route-list b {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--cyan-100);
+      color: var(--cyan-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-top: 38px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .section-note {
+      max-width: 430px;
+      margin: 0;
+      color: var(--ink-500);
+      font-size: 17px;
+      line-height: 1.4;
+      text-align: right;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 245px;
+      border: 1px solid var(--line);
+      border-top: 7px solid var(--accent, var(--cyan-500));
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 24px;
+      box-shadow: 0 18px 40px rgba(7, 18, 37, 0.07);
+      display: flex;
+      flex-direction: column;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 54px rgba(7, 18, 37, 0.12);
+      border-color: rgba(23, 176, 201, 0.5);
+    }
+
+    .card--blue {
+      --accent: var(--blue-600);
+    }
+
+    .card--warm {
+      --accent: var(--warm);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--cyan-100);
+      color: var(--cyan-500);
+      padding: 8px 11px;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .card--blue .tag {
+      background: rgba(37, 96, 200, 0.11);
+      color: var(--blue-600);
+    }
+
+    .card--warm .tag {
+      background: var(--warm-100);
+      color: #9a6a14;
+    }
+
+    .arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink-700);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 1;
+      flex: 0 0 auto;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .card:hover .arrow {
+      background: var(--cyan-100);
+      color: var(--cyan-500);
+    }
+
+    .card h3 {
+      margin: 0;
+      color: var(--ink-900);
+      font-size: 26px;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin: 13px 0 0;
+      color: var(--ink-500);
+      font-size: 17px;
+      line-height: 1.42;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .meta span {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink-500);
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .wide {
+      grid-column: span 2;
+    }
+
+    .practice {
+      margin-top: 18px;
+      border-radius: 28px;
+      background:
+        linear-gradient(120deg, rgba(23, 176, 201, 0.15), rgba(37, 96, 200, 0.12)),
+        #fff;
+      border: 1px solid var(--line);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 18px 42px rgba(7, 18, 37, 0.07);
+    }
+
+    .practice h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .practice p {
+      margin: 0;
+      color: var(--ink-700);
+      font-size: 18px;
+      line-height: 1.42;
+    }
+
+    .practice-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .practice-list li {
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(213, 222, 232, 0.85);
+      padding: 16px 18px;
+      color: var(--ink-700);
+      font-size: 17px;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .footer {
+      margin-top: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 18px;
+      color: var(--ink-500);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .footer a {
+      color: var(--cyan-500);
+      font-weight: 900;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .practice {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .wide {
+        grid-column: span 1;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .section-note {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      .nav {
+        justify-content: flex-start;
+      }
+
+      .hero-copy,
+      .quick-route,
+      .practice {
+        border-radius: 22px;
+      }
+
+      .hero-copy {
+        padding: 28px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 220px;
+      }
+
+      .footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="В начало страницы">
+        <img src="tech/Renue_Logotype_RGB-01.png" alt="Renue">
+        <span>Frontend lecture · материалы</span>
+      </a>
+
+      <nav class="nav" aria-label="Разделы страницы">
+        <a href="#learn">Учиться</a>
+        <a href="#practice">Практика</a>
+        <a href="#interfaces">Интерфейсы</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="kicker">После лекции</div>
+          <h1 id="page-title">Куда идти дальше во&nbsp;<em>frontend</em></h1>
+          <p class="lead">Здесь собраны ссылки, с которых удобно начать: основы HTML и CSS, практика в играх, Git, карта развития и примеры хороших интерфейсов.</p>
+        </div>
+
+        <aside class="quick-route" aria-label="Быстрый маршрут">
+          <h2>Маршрут на первый вечер</h2>
+          <ul class="route-list">
+            <li><b>1</b><span>Открой MDN Learn и разберись, из чего состоит страница.</span></li>
+            <li><b>2</b><span>Пройди несколько уровней Flexbox Froggy.</span></li>
+            <li><b>3</b><span>Выбери один экран из любимого приложения и разложи его по блокам.</span></li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section" id="learn" aria-labelledby="learn-title">
+        <div class="section-head">
+          <h2 id="learn-title">Учиться</h2>
+          <p class="section-note">Не нужно открывать всё сразу. Выбери один курс и доведи до маленького результата.</p>
+        </div>
+
+        <div class="cards">
+          <a class="card" href="https://htmlacademy.org/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">основы</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>HTML Academy</h3>
+            <p>Интерактивные задания по HTML, CSS и верстке. Хорошо подходит для первых шагов руками.</p>
+            <div class="meta"><span>HTML</span><span>CSS</span><span>практика</span></div>
+          </a>
+
+          <a class="card card--blue" href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">справочник</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>MDN Learn</h3>
+            <p>Понятный маршрут по веб-разработке от Mozilla: структура страницы, стили, JavaScript и хорошие практики.</p>
+            <div class="meta"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+          </a>
+
+          <a class="card card--warm" href="https://www.freecodecamp.org/learn/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">курс</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>freeCodeCamp</h3>
+            <p>Большая бесплатная платформа с заданиями и проектами. Можно учиться постепенно и собирать портфолио.</p>
+            <div class="meta"><span>бесплатно</span><span>проекты</span><span>сертификаты</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="practice" aria-labelledby="practice-title">
+        <div class="section-head">
+          <h2 id="practice-title">Практиковаться</h2>
+          <p class="section-note">Эти ресурсы быстро показывают связь между командой, кодом и результатом на экране.</p>
+        </div>
+
+        <div class="cards">
+          <a class="card" href="https://flexboxfroggy.com/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">игра</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>Flexbox Froggy</h3>
+            <p>Игра для тренировки CSS Flexbox. Помогает понять выравнивание, отступы и расположение элементов.</p>
+            <div class="meta"><span>CSS</span><span>layout</span><span>15 минут</span></div>
+          </a>
+
+          <a class="card card--blue" href="https://learngitbranching.js.org/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">git</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>Learn Git Branching</h3>
+            <p>Визуальный тренажер по Git. Показывает, что происходит с ветками, коммитами и слияниями.</p>
+            <div class="meta"><span>Git</span><span>команды</span><span>визуально</span></div>
+          </a>
+
+          <a class="card card--warm" href="https://roadmap.sh/frontend" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">карта</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>roadmap.sh</h3>
+            <p>Карта frontend-навыков. Нужна не для страха, а чтобы видеть общий маршрут и выбирать следующий шаг.</p>
+            <div class="meta"><span>план</span><span>навыки</span><span>ориентир</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" id="interfaces" aria-labelledby="interfaces-title">
+        <div class="section-head">
+          <h2 id="interfaces-title">Разбирать интерфейсы</h2>
+          <p class="section-note">Frontend — это не только код. Важно смотреть, как реальные продукты ведут человека к действию.</p>
+        </div>
+
+        <div class="cards">
+          <a class="card card--blue" href="https://mobbin.com/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">референсы</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>Mobbin</h3>
+            <p>Большая библиотека экранов популярных приложений. Удобно смотреть паттерны, карточки, формы и навигацию.</p>
+            <div class="meta"><span>UI</span><span>паттерны</span><span>экраны</span></div>
+          </a>
+
+          <a class="card" href="https://pageflows.com/" target="_blank" rel="noopener noreferrer">
+            <div class="card-top">
+              <span class="tag">сценарии</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </div>
+            <h3>Page Flows</h3>
+            <p>Записи пользовательских сценариев в реальных продуктах: регистрация, покупка, поиск, оформление заказа.</p>
+            <div class="meta"><span>UX</span><span>flows</span><span>сценарии</span></div>
+          </a>
+
+          <article class="card card--warm">
+            <div class="card-top">
+              <span class="tag">упражнение</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </div>
+            <h3>Любимое приложение</h3>
+            <p>Открой любой экран и ответь: что здесь главное действие, что вторично, где состояние ошибки и что будет после клика.</p>
+            <div class="meta"><span>анализ</span><span>мышление</span><span>10 минут</span></div>
+          </article>
+        </div>
+
+        <div class="practice">
+          <div>
+            <div class="kicker">Мини-задание</div>
+            <h2>Разбери один экран как frontend-разработчик</h2>
+            <p>Выбери экран доставки, игры, дневника или банка. Не оценивай его словом «красиво». Разложи, как он помогает человеку действовать.</p>
+          </div>
+
+          <ul class="practice-list">
+            <li>Какое действие здесь главное?</li>
+            <li>Какая информация нужна до клика?</li>
+            <li>Что меняется после клика?</li>
+            <li>Что увидит человек при загрузке или ошибке?</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <a href="#top">Наверх</a>
+    </footer>
+  </div>
+  <script>
+    document.querySelectorAll('a[href^="https://"], a[href^="http://"]').forEach((link) => {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    });
+  </script>
+</body>
+</html>
